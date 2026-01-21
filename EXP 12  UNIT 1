@@ -1,0 +1,22 @@
+import numpy as np
+
+
+rewards = np.array([
+    [2, 1, -1],   
+    [1, 2, 2],    
+    [-1, 2, 4]    
+])
+
+V = np.zeros(3)
+alpha, gamma = 0.1, 0.9
+
+for _ in range(500):           
+    s = np.random.randint(3)
+    a = np.random.randint(3)
+    r = rewards[s][a]
+    s_next = np.random.randint(3)
+    V[s] += alpha * (r + gamma * V[s_next] - V[s])
+
+policy = np.argmax(rewards + gamma * V, axis=1)
+print("State Values:", V)
+print("Optimal Policy:", policy)
