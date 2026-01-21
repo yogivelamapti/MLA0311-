@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define SIZE 5
+#define ROBOTS 2
+
+int env[SIZE][SIZE] = {
+    {0, 0, 1, 0, 0},
+    {0, 1, 0, 0, 0},
+    {0, 0, 0, 1, 0},
+    {1, 0, 0, 0, 0},
+    {0, 0, 1, 0, 0}
+};
+
+int explored[SIZE][SIZE] = {0};
+
+void explore(int x, int y) {
+    if (x < 0 || y < 0 || x >= SIZE || y >= SIZE) return;
+    if (env[x][y] == 1 || explored[x][y]) return;
+
+    explored[x][y] = 1;
+
+    explore(x+1, y);
+    explore(x-1, y);
+    explore(x, y+1);
+    explore(x, y-1);
+}
+
+int main() {
+    int i;
+    int robotX[ROBOTS] = {0, 4};
+    int robotY[ROBOTS] = {0, 4};
+
+    for (i = 0; i < ROBOTS; i++) {
+        explore(robotX[i], robotY[i]);
+    }
+
+    printf("Final Explored Map:\n");
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            printf("%d ", explored[i][j]);
+        }
+        printf("\n");
+    }
+    return 0;
+}
