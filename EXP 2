@@ -1,0 +1,27 @@
+import numpy as np
+
+V = np.zeros((3,3))
+gamma = 0.9
+goal = (2,2)
+obstacle = (1,1)
+
+policy = {(0,0):'R',(0,1):'R',(0,2):'D',
+          (1,0):'R',(1,2):'D',
+          (2,0):'R',(2,1):'R'}
+
+actions = {'R':(0,1),'D':(1,0)}
+
+def reward(s):
+    if s == obstacle: return -2
+    if s == goal: return 5
+    return -1
+
+for _ in range(50):
+    for i in range(3):
+        for j in range(3):
+            if (i,j) in [goal, obstacle]: continue
+            a = policy[(i,j)]
+            ni, nj = i+actions[a][0], j+actions[a][1]
+            V[i,j] = reward((ni,nj)) + gamma * V[ni,nj]
+
+print(V)
