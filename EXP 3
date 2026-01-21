@@ -1,0 +1,23 @@
+import numpy as np
+
+
+lanes_speed = [60, 40, 80]  
+lane = 1                 
+total_reward = 0
+
+actions = ["LEFT", "STAY", "RIGHT"]
+
+for step in range(5):
+    action = np.random.choice(actions)  
+
+    if action == "LEFT" and lane > 0:
+        lane -= 1
+    elif action == "RIGHT" and lane < 2:
+        lane += 1
+
+    reward = lanes_speed[lane]
+    total_reward += reward
+
+    print(f"Step {step+1}: Action={action}, Lane={lane}, Speed={reward}")
+
+print("Total Reward:", total_reward)
